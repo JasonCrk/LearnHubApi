@@ -38,7 +38,13 @@ THIRT_PARTY_APPS = [
 ]
 
 LEARNHUB_APPS = [
-    'apps.user'
+    'apps.user',
+    'apps.teacher',
+    'apps.student',
+    'apps.classroom',
+    'apps.topic',
+    'apps.homework',
+    'apps.assigned_homework'
 ]
 
 INSTALLED_APPS = COMMON_APPS + THIRT_PARTY_APPS + LEARNHUB_APPS
