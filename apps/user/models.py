@@ -53,8 +53,8 @@ class UserAccount(AbstractBaseUser):
         unique=True
     )
     date_joined = models.DateTimeField(auto_now_add=True)
-    is_active = models.BooleanField(verbose_name='IS ACTIVE')
-    is_admin = models.BooleanField(verbose_name='IS ADMIN')
+    is_active = models.BooleanField(verbose_name='IS ACTIVE', default=True)
+    is_admin = models.BooleanField(verbose_name='IS ADMIN', default=False)
 
     objects = UserAccountManager()
 

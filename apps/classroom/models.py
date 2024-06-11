@@ -1,9 +1,11 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 
+import uuid
+
 from apps.user.models import UserAccount
 
-from .validators import validate_access_code, validate_hex_color
+from .validators import validate_hex_color
 
 
 class Color(models.Model):
@@ -23,6 +25,18 @@ class Color(models.Model):
         return self.name
 
 
+class ClassroomManager(models.Manager):
+    def create_classroom(self, user, **kwargs):
+        return self.create(
+            color=kwargs.get('color'),
+            name=kwargs.get('name'),
+            description=kwargs.get('description'),
+            section=kwargs.get('section'),
+            subject=kwargs.get('subject'),
+            room=kwargs.get('room')
+        ).teachers.add(user)
+
+
 class ClassRoom(models.Model):
     banner_url = models.URLField(blank=True, null=True)
     picture_url = models.URLField(blank=True, null=True)
@@ -33,10 +47,10 @@ class ClassRoom(models.Model):
         max_length=100,
         validators=[MinLengthValidator(3)]
     )
-    access_code = models.CharField(
-        unique=True,
-        max_length=7,
-        validators=[validate_access_code]
+    access_code = models.UUIDField(
+        verbose_name='Access code',
+        default=uuid.uuid4,
+        unique=True
     )
     description = models.TextField(
         verbose_name='Description',
@@ -72,5 +86,8 @@ class ClassRoom(models.Model):
         related_name='students'
     )
 
+    objects = ClassroomManager()
+
     def __str__(self) -> str:
         return self.name
+
