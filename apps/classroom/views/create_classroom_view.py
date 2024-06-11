@@ -8,7 +8,7 @@ from apps.teacher.models import Teacher
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
-def create_classroom_view(request: Request):
+def create_classroom(request: Request):
     classroom_data = request.data
 
     new_classroom_serializer = CreateClassroomSerializer(data=classroom_data)
