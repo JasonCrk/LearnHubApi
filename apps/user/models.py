@@ -4,12 +4,15 @@ from django.db import models
 
 
 class UserAccountManager(BaseUserManager):
+    use_in_migrations = True
+
     def create_user(
             self,
             email: str,
             first_name: str,
             last_name: str,
-            password=None):
+            password=None,
+            **extra_fields):
         if not email:
             raise ValueError("The email is required")
 
@@ -17,23 +20,25 @@ class UserAccountManager(BaseUserManager):
             email=self.normalize_email(email),
             first_name=first_name,
             last_name=last_name,
+            **extra_fields
         )
 
-        user.is_active = True
         user.set_password(password)
         user.save(using=self._db)
 
         return user
 
-    def create_superuser(self, email: str, first_name: str, last_name: str, password=None):
+    def create_superuser(self, email: str, first_name: str, last_name: str, password=None, **extra_fields):
         user = self.create_user(
             email=email,
             first_name=first_name,
             last_name=last_name,
-            password=password
+            password=password,
+            **extra_fields
         )
 
         user.is_admin = True
+        user.is_active = True
         user.save(using=self._db)
 
         return user
