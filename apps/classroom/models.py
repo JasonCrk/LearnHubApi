@@ -40,7 +40,7 @@ class ClassroomManager(models.Manager):
 class ClassRoom(models.Model):
     banner_url = models.URLField(blank=True, null=True)
     picture_url = models.URLField(blank=True, null=True)
-    accept_invitation = models.BooleanField(default=True)
+    available_join = models.BooleanField(default=True)
     color = models.ForeignKey(Color, on_delete=models.CASCADE)
     name = models.CharField(
         verbose_name='Name',
