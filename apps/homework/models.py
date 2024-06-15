@@ -17,7 +17,7 @@ class Homework(models.Model):
         verbose_name='Deadline',
         validators=[validate_datetime_is_future]
     )
-    class_room = models.ForeignKey(
-        'classroom.ClassRoom',
+    classroom = models.ForeignKey(
+        'classroom.Classroom',
         on_delete=models.CASCADE
     )

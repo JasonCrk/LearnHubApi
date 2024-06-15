@@ -1,14 +1,14 @@
 from rest_framework.schemas.coreapi import serializers
 from rest_framework.serializers import ModelSerializer
 
-from apps.classroom.models import ClassRoom, Color
+from apps.classroom.models import Classroom, Color
 
 
 class CreateClassroomSerializer(ModelSerializer):
     color_id = serializers.IntegerField(min_value=1)
 
     class Meta:
-        model = ClassRoom
+        model = Classroom
         fields = [
             'name',
             'color_id',
@@ -24,5 +24,5 @@ class CreateClassroomSerializer(ModelSerializer):
 
     def create(self, validated_data):
         color = Color.objects.get(pk=validated_data['color_id'])
-        return ClassRoom(**validated_data, color=color)
+        return Classroom(**validated_data, color=color)
 

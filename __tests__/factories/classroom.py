@@ -1,6 +1,6 @@
 import factory
 
-from apps.classroom.models import ClassRoom
+from apps.classroom.models import Classroom
 
 from __tests__.factories.user_account import UserAccountFactory
 from __tests__.factories.color import ColorFactory
@@ -8,7 +8,7 @@ from __tests__.factories.color import ColorFactory
 
 class ClassroomFactory(factory.django.DjangoModelFactory):
     class Meta:
-        model = ClassRoom
+        model = Classroom
 
     name = factory.Faker('pystr', max_chars=100, min_chars=3)
     color = factory.SubFactory(ColorFactory)

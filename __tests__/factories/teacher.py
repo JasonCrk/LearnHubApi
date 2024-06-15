@@ -11,7 +11,7 @@ class TeacherFactory(factory.django.DjangoModelFactory):
         model = Teacher
 
     user = factory.SubFactory(UserAccountFactory)
-    class_room = factory.SubFactory(ClassroomFactory)
+    classroom = factory.SubFactory(ClassroomFactory)
 
 class OwnerTeacherFactory(TeacherFactory):
     @classmethod
