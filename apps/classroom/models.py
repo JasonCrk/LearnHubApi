@@ -37,7 +37,7 @@ class ClassroomManager(models.Manager):
         ).teachers.add(user)
 
 
-class ClassRoom(models.Model):
+class Classroom(models.Model):
     banner_url = models.URLField(blank=True, null=True)
     picture_url = models.URLField(blank=True, null=True)
     available_join = models.BooleanField(default=True)

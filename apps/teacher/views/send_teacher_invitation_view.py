@@ -33,7 +33,7 @@ def send_invitation(request: Request):
     try:
         teacher = Teacher.objects.get(
             user=request.user,
-            class_room__pk=classroom_id
+            classroom__pk=classroom_id
         )
     except:
         return Response({
@@ -52,14 +52,14 @@ def send_invitation(request: Request):
             'message': 'The user does not exist'
         }, status=status.HTTP_404_NOT_FOUND)
 
-    if Teacher.objects.filter(user=user, class_room__pk=classroom_id).exists():
+    if Teacher.objects.filter(user=user, classroom__pk=classroom_id).exists():
         return Response({
             'message': 'The user is already a teacher in the classroom'
         }, status=status.HTTP_400_BAD_REQUEST)
 
     if Student.objects.filter(
         user=user,
-        class_room__pk=classroom_id,
+        classroom__pk=classroom_id,
         is_active=False
     ).exists():
         return Response({

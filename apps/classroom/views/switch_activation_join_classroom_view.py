@@ -6,7 +6,7 @@ from rest_framework import status
 
 import uuid
 
-from apps.classroom.models import ClassRoom
+from apps.classroom.models import Classroom
 from apps.teacher.models import Teacher
 
 
@@ -14,15 +14,15 @@ from apps.teacher.models import Teacher
 @permission_classes([IsAuthenticated])
 def switch_activation_join_classroom(request: Request, classroom_id: int):
     try:
-        classroom = ClassRoom.objects.get(pk=classroom_id)
-    except ClassRoom.DoesNotExist:
+        classroom = Classroom.objects.get(pk=classroom_id)
+    except Classroom.DoesNotExist:
         return Response({
             'message': 'The classroom does not exist'
         }, status=status.HTTP_404_NOT_FOUND)
 
     if not Teacher.objects.filter(
         user=request.user,
-        class_room=classroom,
+        classroom=classroom,
         owner=True
     ).exist():
         return Response({

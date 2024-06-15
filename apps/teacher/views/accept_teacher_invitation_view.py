@@ -32,7 +32,7 @@ def accept_teacher_invitation(request: Request):
             'message': 'The invitation is not for you'
         }, status=status.HTTP_400_BAD_REQUEST)
 
-    classroom = invitation.teacher.class_room
+    classroom = invitation.teacher.classroom
 
     invitation.delete()
 

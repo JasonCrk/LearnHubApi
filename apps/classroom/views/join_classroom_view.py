@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
-from apps.classroom.models import ClassRoom
+from apps.classroom.models import Classroom
 from apps.student.models import Student
 
 from uuid import UUID
@@ -14,8 +14,8 @@ from uuid import UUID
 @permission_classes([IsAuthenticated])
 def join_classroom(request: Request, access_code: UUID):
     try:
-        classroom = ClassRoom.objects.get(access_code=access_code)
-    except ClassRoom.DoesNotExist:
+        classroom = Classroom.objects.get(access_code=access_code)
+    except Classroom.DoesNotExist:
         return Response({
             'message': 'The classroom does not exist'
         }, status=status.HTTP_404_NOT_FOUND)
@@ -27,7 +27,7 @@ def join_classroom(request: Request, access_code: UUID):
 
     student, created = Student.objects.get_or_create(
         user=request.user,
-        class_room=classroom
+        classroom=classroom
     )
 
     if not created:

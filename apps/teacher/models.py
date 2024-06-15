@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.classroom.models import ClassRoom
+from apps.classroom.models import Classroom
 from apps.user.models import UserAccount
 
 from .fields import generate_code
@@ -10,12 +10,12 @@ import uuid
 
 class TeacherManager(models.Manager):
     def create_owner_teacher(self, user, classroom):
-        return self.create(user=user, class_room=classroom, owner=True)
+        return self.create(user=user, classroom=classroom, owner=True)
 
 
 class Teacher(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
-    class_room = models.ForeignKey(ClassRoom, on_delete=models.CASCADE)
+    classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     owner = models.BooleanField(default=False)
 
     objects = TeacherManager()
