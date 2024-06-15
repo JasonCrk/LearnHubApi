@@ -4,6 +4,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status
 
+from apps.student.models import Student
 from apps.user.models import UserAccount
 
 from ..mails import send_teacher_invitation
@@ -50,6 +51,20 @@ def send_invitation(request: Request):
         return Response({
             'message': 'The user does not exist'
         }, status=status.HTTP_404_NOT_FOUND)
+
+    if Teacher.objects.filter(user=user, class_room__pk=classroom_id).exists():
+        return Response({
+            'message': 'The user is already a teacher in the classroom'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
+    if Student.objects.filter(
+        user=user,
+        class_room__pk=classroom_id,
+        is_active=False
+    ).exists():
+        return Response({
+            'message': 'The user is already a student in the classroom'
+        }, status=status.HTTP_400_BAD_REQUEST)
 
     invitation = Invitation.create(teacher=teacher, user=user)
 
