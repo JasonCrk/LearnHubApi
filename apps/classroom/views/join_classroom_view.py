@@ -13,17 +13,21 @@ from uuid import UUID
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def join_classroom(request: Request, access_code: UUID):
-
     try:
-        classroom = ClassRoom.objects.only('id').get(access_code=access_code)
+        classroom = ClassRoom.objects.get(access_code=access_code)
     except ClassRoom.DoesNotExist:
         return Response({
             'message': 'The classroom does not exist'
         }, status=status.HTTP_404_NOT_FOUND)
 
+    if not classroom.available_join:
+        return Response({
+            'message': 'The classroom does not allow more students'
+        }, status=status.HTTP_400_BAD_REQUEST)
+
     student, created = Student.objects.get_or_create(
         user=request.user,
-        class_room__pk=classroom.id
+        class_room=classroom
     )
 
     if not created:
