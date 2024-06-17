@@ -105,6 +105,12 @@ SIMPLE_JWT = {
     )
 }
 
+# Azure
+AZURE_STORAGE_ACCOUNT = os.environ.get('AZURE_STORAGE_ACCOUNT')
+AZURE_VAULT_ACCOUNT = os.environ.get('AZURE_VAULT_ACCOUNT')
+AZURE_STORAGE_KEY_NAME = os.environ.get('AZURE_STORAGE_KEY_NAME')
+AZURE_APP_BLOB_NAME = os.environ.get('AZURE_APP_BLOB_NAME')
+
 # Authentication & Authorization
 DJOSER = {
     'LOGIN_FIELD': 'email',

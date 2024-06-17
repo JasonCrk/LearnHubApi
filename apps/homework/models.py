@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 
 from apps.homework.validators import validate_datetime_is_future
@@ -20,4 +21,9 @@ class Homework(models.Model):
     classroom = models.ForeignKey(
         'classroom.Classroom',
         on_delete=models.CASCADE
+    )
+    resources = ArrayField(
+        models.URLField(),
+        default=list,
+        blank=True
     )
