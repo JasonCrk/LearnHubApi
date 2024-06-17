@@ -19,7 +19,10 @@ class AssignedHomework(models.Model):
         choices=AssignedHomeworkStatus,
         default=AssignedHomeworkStatus.PENDING
     )
-    grade = models.PositiveSmallIntegerField()
+    grade = models.PositiveSmallIntegerField(
+        null=True,
+        blank=True
+    )
     solution = ArrayField(
         models.URLField(),
         default=list,
