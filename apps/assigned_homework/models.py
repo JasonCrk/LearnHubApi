@@ -8,6 +8,7 @@ from apps.homework.models import Homework
 class AssignedHomeworkStatus(models.TextChoices):
     PENDING = 'PEND', _('Pending')
     RESOLVED = 'RESOLV', _('Resolved')
+    RATED = 'RATED', _('Rated')
     NO_RESOLVED = 'NORES', _('No resolved')
 
 
